@@ -64,21 +64,9 @@ MeuProjeto/
 - **Font Awesome**: Ícones para melhor apresentação.
 - **Power BI**: Painéis interativos integrados via links externos.
 
-## 🌐 Deploy
 
-Este projeto pode ser acessado online via GitHub Pages:
-[https://seuusuario.github.io/seurepositorio/](https://seuusuario.github.io/seurepositorio/)
 
-## 📬 Contato
 
-Se você tiver dúvidas ou sugestões, entre em contato:
-- **E-mail**: [seuemail@exemplo.com](mailto:seuemail@exemplo.com)
-- **LinkedIn**: [linkedin.com/in/seuusuario](https://linkedin.com/in/seuusuario)
 
-## 📄 Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
----
 
 Desenvolvido por [Eric Vieira]. 🚀
