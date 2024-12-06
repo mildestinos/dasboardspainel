@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang='pt-br'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Página com Quadros Estilizados e Menu Lateral</title>
+    
+    <!-- Link para o Font Awesome (ícones) -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'>
+    
+    <style>
+        /* Estilos gerais */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            display: flex;
+        }
+
+        /* Estilo da tela de boas-vindas */
+        #tela-boas-vindas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Fundo escuro com opacidade */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Mantém a tela de boas-vindas sobreposta ao conteúdo */
+        }
+
+        #tela-boas-vindas img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* Estilo do menu lateral */
+        .menu-lateral {
+            width: 250px;
+            height: 100vh;
+            background-color: #FFD700;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menu-lateral h2 {
+            color: #003366;
+            margin-bottom: 20px;
+        }
+
+        .menu-lateral a {
+            color: #003366;
+            text-decoration: none;
+            font-size: 18px;
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .menu-lateral a i {
+            margin-right: 10px;
+        }
+
+        .menu-lateral a:hover {
+            color: #F7DC6F;
+        }
+
+        /* Estilo do cabeçalho */
+        header {
+            margin-left: 270px;
+            margin-right: 320px; /* Espaço para a barra lateral direita */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-bottom: 2px solid #003366;
+            position: fixed;
+            top: 0;
+            width: calc(100% - 570px); /* Largura total menos o menu e a barra de notícias */
+            z-index: 1;
+        }
+
+        header h1 {
+            font-size: 2em;
+            color: #003366;
+            text-align: left; /* Alinhado à esquerda no topo */
+        }
+
+        /* Estilo do container dos quadros */
+        .container-wrapper {
+            margin-left: 270px;
+            margin-right: 320px; /* Espaço para a barra lateral direita */
+            padding: 20px;
+            padding-top: 100px; /* Adiciona espaço para o cabeçalho */
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            overflow-y: auto;
+            height: calc(100vh - 100px);
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .section:hover {
+            transform: scale(1.05);
+        }
+
+        .icon {
+            font-size: 2.5em;
+            color: #f78c1e;
+            margin-bottom: 10px;
+        }
+
+        .section h2 {
+            color: #1e4c8e;
+            font-size: 1.2em;
+        }
+
+        .section p {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        /* Estilo para o slide de notícias na lateral direita */
+        .noticias-lateral {
+            width: 300px;
+            height: 100vh;
+            background-color: #f4f4f4;
+            position: fixed;
+            right: 0;
+            top: 0;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .noticias-lateral h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+            color: #003366;
+        }
+
+        .news-slider {
+            height: auto;
+        }
+
+        .news-item {
+            display: none;
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item.active {
+            display: block;
+        }
+
+        .news-link {
+            display: block;
+            margin-top: 10px;
+            color: blue;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .news-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Estilo do rodapé */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            background-color: #003366;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer p {
+            margin: 0;
+            color: #FFD700;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Tela de boas-vindas -->
+    <div id="tela-boas-vindas">
+        <img src="Capa.png" alt="Boas-vindas! Clique para continuar">
+    </div>
+
+    <!-- Menu lateral -->
+    <div class='menu-lateral'>
+        <h2>Menu</h2>
+        <a onclick="carregarPagina('metodologias.html')">
+            <i class='fas fa-file-invoice-dollar'></i> Informações de Receita
+        </a>
+        <a onclick="carregarPagina('gestao_recursos.html')">
+            <i class='fas fa-chart-line'></i> Gestão de Recursos
+        </a>
+        <a href="mapa_.html" target="_blank">
+            <i class='fas fa-map-marker-alt'></i> Metodologias de Custeio
+        </a>
+		        <a href="https://www.ibge.gov.br/indicadores.html" target="_blank">
+    <i class='fas fa-chart-line'></i> Indicadores
+</a>
+    </div>
+
+    <!-- Cabeçalho -->
+    <header>
+        <h1>Painéis Gerenciais</h1>
+    </header>
+
+    <!-- Conteúdo principal com rolagem -->
+    <div class='container-wrapper'>
+        <div class='container'>
+            <!-- Seção 1 -->
+            <div class='section'>
+                <div class='icon'>
+                    <i class='fas fa-file-invoice-dollar' style="color: blue;"></i>
+                </div>
+                <h2>Receita por município</h2>
+                <p>Este painel apresenta a receita operacional total segmentada por região, unidades federativas, superintendências e municípios.</p>
+                <div class='video-container'>
+                    <a href="https://app.powerbi.com/view?r=eyJrIjoiYjQyZGM4ZTMtYmRiZi00MWNhLTlhOGUtYjlhYjkxZmYyZTkxIiwidCI6ImVkYmNjYjA2LWNmZjAtNDVlYS1hOThkLWEyMTAyZThmNzlkMSJ9" target="_blank">
+                        <img src='Munic_image.png' alt='Clique aqui' class='thumbnail'>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Seção 2 -->
+            <div class='section'>
+                <div class='icon'>
+                    <i class='fas fa-file-invoice-dollar' style="color: blue;"></i>
+                </div>
+                <h2>Receita Diária</h2>
+                <p>Este painel apresenta a performance operacional, destacando receita e quantidade diária planejada e executada.</p>
+                <div class='video-container'>
+                    <a href="inclua seu link" target="_blank">
+                        <img src='01_image.png' alt='Clique aqui' class='thumbnail'>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Seção 3 -->
+            <div class='section'>
+                <div class='icon'>
+                    <i class='fas fa-headset' style="color: blue;"></i>
+                </div>
+                <h2>Capacidade de Atendimento</h2>
+                <p>Este painel analisa o processo de atendimento, destacando margem de contribuição, utilização de canais (próprio e terceiro), efetivo médio, objetos por empregado, carga de trabalho e informações sobre capacidade prática, utilização e capacidade não utilizada.</p>
+                <div class='video-container'>
+                    <a href="inclua seu link" target="_blank">
+                        <img src='Atendimento.png' alt='Clique aqui' class='thumbnail'>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Seção 4 -->
+            <div class='section'>
+                <div class='icon'>
+                    <i class='fas fa-truck' style="color: blue;"></i>
+                </div>
+                <h2>Capacidade de Distribuição</h2>
+                <p>Este painel oferece uma visão detalhada do processo de distribuição nas unidades federativas, incluindo efetivo médio, objetos por empregado, carga de trabalho, capacidade prática, utilização e capacidade não utilizada.</p>
+                <div class='video-container'>
+                    <a href="inclua seu link" target="_blank">
+                        <img src='Distribuição.png' alt='Clique aqui' class='thumbnail'>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Seção 5 -->
+            <div class='section'>
+                <div class='icon'>
+                    <i class='fas fa-chart-line' style="color: blue;"></i>
+                </div>
+                <h2>Maximização de Recursos</h2>
+                <p>Este painel apresenta um detalhamento das despesas, classificando os gastos em passível e não passível de eliminação, além de analisar a proximidade geográfica das unidades, receita e indicadores (R/D, margem de contribuição, margem direta e capacidade não utilizada) em níveis de unidades federativas, municípios e unidades operacionais.</p>
+                <div class='video-container'>
+                    <a href="https://app.powerbi.com/view?r=eyJrIjoiODMxNWQxNjYtYWYzYy00Y2FhLWEzZTYtYjg4YTJmNjRiN2Q4IiwidCI6ImVkYmNjYjA2LWNmZjAtNDVlYS1hOThkLWEyMTAyZThmNzlkMSJ9" target="_blank">
+                        <img src='max_.png' alt='Clique aqui' class='thumbnail'>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Barra lateral direita com notícias -->
+    <div class="noticias-lateral">
+        <h2>Últimas Notícias</h2>
+        <div class="news-slider" id="news-slider">
+            <!-- As notícias serão carregadas aqui dinamicamente -->
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer>
+        <p> - Incluir sua emrpesa - 2024.</p>
+    </footer>
+
+    <script>
+        // Função para ocultar a tela de boas-vindas ao clicar nela
+        document.getElementById('tela-boas-vindas').addEventListener('click', function () {
+            this.style.display = 'none'; // Oculta a tela de boas-vindas
+        });
+
+        // Função para remover a tela de boas-vindas ao rolar a página
+        window.addEventListener('scroll', function () {
+            document.getElementById('tela-boas-vindas').style.display = 'none';
+        });
+
+         // Função para carregar e exibir o RSS da Agência de Notícias do IBGE
+        async function carregarNoticias() {
+            const rssUrl = 'https://agenciadenoticias.ibge.gov.br/agencia-rss';
+            const rssToJsonUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+            try {
+                const response = await fetch(rssToJsonUrl);
+                const data = await response.json();
+
+                const newsSlider = document.getElementById('news-slider');
+                
+                // Filtra apenas as notícias de 2024
+                const noticias2024 = data.items.filter(item => item.pubDate.startsWith('2024')).slice(0, 8);
+
+                noticias2024.forEach((item, index) => { // Limita a 5 notícias
+                    const newsItem = document.createElement('div');
+                    newsItem.classList.add('news-item');
+                    if (index === 0) {
+                        newsItem.classList.add('active');
+                    }
+
+                    const titulo = document.createElement('h3');
+                    titulo.classList.add('news-title');
+                    titulo.innerText = item.title;
+
+                    const dataPublicacao = document.createElement('span');
+                    dataPublicacao.classList.add('news-date');
+                    dataPublicacao.innerText = new Date(item.pubDate).toLocaleDateString('pt-BR');
+
+                    // Remove HTML da descrição para garantir texto puro
+                    const descricao = document.createElement('p');
+                    descricao.classList.add('news-description');
+                    const textoDescricao = item.description ? item.description.replace(/<\/?[^>]+(>|$)/g, "") : 'Descrição não disponível';
+                    descricao.innerText = textoDescricao.slice(0, 80) + '...';
+
+                    const link = document.createElement('a');
+                    link.href = item.link;
+                    link.target = '_blank';
+                    link.classList.add('news-link');
+                    link.innerText = 'Leia mais';
+
+                    newsItem.appendChild(titulo);
+                    newsItem.appendChild(dataPublicacao);
+                    newsItem.appendChild(descricao);
+                    newsItem.appendChild(link);
+                    newsSlider.appendChild(newsItem);
+                });
+
+                iniciarSlide(); // Inicia o slide rotativo das notícias
+
+            } catch (error) {
+                console.error('Erro ao carregar as notícias:', error);
+            }
+        }
+
+        // Função para rotacionar as notícias
+        function iniciarSlide() {
+            let currentNewsIndex = 0;
+            const newsItems = document.querySelectorAll('.news-item');
+
+            function showNextNews() {
+                newsItems[currentNewsIndex].classList.remove('active');
+                currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
+                newsItems[currentNewsIndex].classList.add('active');
+            }
+
+            // Alterar a notícia a cada 5 segundos
+            setInterval(showNextNews, 5000);
+        }
+
+        // Chama a função para carregar as notícias quando a página carregar
+        window.onload = carregarNoticias;
+    </script>
+
+</body>
+</html>

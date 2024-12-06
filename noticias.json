@@ -1,0 +1,16 @@
+{
+  "noticias": [
+    {
+      "titulo": "Notícia 1",
+      "conteudo": "Correios lançam nova plataforma de rastreamento."
+    },
+    {
+      "titulo": "Notícia 2",
+      "conteudo": "Funcionários dos Correios entram em greve."
+    },
+    {
+      "titulo": "Notícia 3",
+      "conteudo": "Correios anunciam novas tarifas para 2024."
+    }
+  ]
+}
