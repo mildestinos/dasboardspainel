@@ -1,6 +1,6 @@
 # Painéis Gerenciais
 
-Este projeto é uma aplicação web interativa para visualização e análise de painéis gerenciais. Ele oferece uma visão detalhada de diferentes aspectos operacionais, como receita por município, capacidade de distribuição e atendimento, e maximização de recursos.
+Este projeto é uma aplicação web interativa para visualização e análise de painéis gerenciais. Ele oferece uma visão detalhada de diferentes aspectos operacionais, como receita por município, capacidade de distribuição e atendimento, e maximização de recursos. Você pode personalizar completamente o projeto, alterando links, cores, imagens e outros elementos diretamente no arquivo HTML, permitindo que ele atenda às suas necessidades específicas.
 
 ## 📂 Estrutura do Projeto
 
